@@ -1,0 +1,8 @@
+
+
+
+#기본이여서 생략됨, 없어도 지장없음 다만 바꿀수 있다.
+spring:
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
