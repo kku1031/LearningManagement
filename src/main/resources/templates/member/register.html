@@ -12,10 +12,13 @@
     <!-- 서버가 데이터로 가려면 form 태그로 감싸져있어야함, name을 가지고 있어야함. -->
     <form method="post">
     <div>                                                   <!-- submit시 입력값 없어도 전송되는 것 방지-->
-        <input type="email" name="userId" placeholder="아이디(이메일) 입력" required/>
+        <input type="email" name="userId" placeholder="아이디 입력" required/>
     </div>
     <div>
         <input type="text" name="userName" placeholder="이름 입력" required/>
+    </div>
+    <div>
+        <input type="tel" name="phone" placeholder="전화번호 입력" required/>
     </div>
     <div>
         <input type="password" name="password" placeholder="비밀번호 입력" required/>
@@ -23,9 +26,6 @@
         <div>
             <input type="password" name="rePassword" placeholder="비밀번호 확인 입력" required/>
         </div>
-    <div>
-        <input type="tel" name="phone" placeholder="전화번호 입력" required/>
-    </div>
     <div>
         <button>회원 가입 하기</button>
     </div>

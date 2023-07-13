@@ -1,8 +1,17 @@
-
-
-
 #기본이여서 생략됨, 없어도 지장없음 다만 바꿀수 있다.
 spring:
   thymeleaf:
     prefix: classpath:/templates/
     suffix: .html
+  datasource:
+    url: jdbc:mariadb://localhost:3307/minicampus
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: minicampus_user
+    password: a1234
+#테이블 자동생성 : true
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+

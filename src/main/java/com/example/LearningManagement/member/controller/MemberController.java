@@ -1,18 +1,25 @@
-package com.example.LearningManagement.member;
+package com.example.LearningManagement.member.controller;
 
+import com.example.LearningManagement.member.entity.Member;
+import com.example.LearningManagement.member.model.MemberInput;
+import com.example.LearningManagement.member.service.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
 
 @Controller
+@RequiredArgsConstructor
 public class MemberController {
+
+    private final MemberService memberService;
 
     @GetMapping("/member/register")
     public String register() {
-        System.out.println("주소 새로고침");
         return "member/register";
     }
 
@@ -23,8 +30,8 @@ public class MemberController {
     public String registerSubmit(HttpServletRequest request, HttpServletResponse response
             , MemberInput parameter) {
 
-        System.out.println(parameter.toString());
+        boolean result = memberService.register(parameter);
 
-        return "member/register";
+        return "member/register_complete";
     }
 }

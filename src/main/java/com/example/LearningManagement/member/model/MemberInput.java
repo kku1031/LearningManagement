@@ -1,4 +1,4 @@
-package com.example.LearningManagement.member;
+package com.example.LearningManagement.member.model;
 
 
 import lombok.Data;
@@ -8,7 +8,8 @@ public class MemberInput {
 
     private String userId;
     private String userName;
-    private String password;
     private String phone;
+    private String password;
+
 
 }
