@@ -32,16 +32,17 @@ public class MemberServiceImpl implements MemberService {
 
         String uuid = UUID.randomUUID().toString();
 
-        Member member = new Member();
+        Member member = Member.builder()
+                .userId(parameter.getUserId())
+                .userName(parameter.getUserName())
+                .phone(parameter.getPhone())
+                .password(parameter.getPassword())
+                .regDt(LocalDateTime.now())
+                .emailAuthYn(false)
+                //회원가입 시 아무도 알수 없는 키값 생성.
+                .emailAuthKey(uuid)
+                .build();
 
-        member.setUserId(parameter.getUserId());
-        member.setUserName(parameter.getUserName());
-        member.setPhone(parameter.getPhone());
-        member.setPassword(parameter.getPassword());
-        member.setRegDt(LocalDateTime.now());
-        member.setEmailAuthYn(false);
-        //회원가입 시 아무도 알수 없는 키값 생성.
-        member.setEmailAuthKey(uuid);
         memberRepository.save(member);
 
         //회원가입 후 메일 전송
@@ -49,7 +50,7 @@ public class MemberServiceImpl implements MemberService {
         String subject = "학습관리시스템 사이트 가입을 축하드립니다.";
         String text = "<p>학습관리시스템 사이트 가입을 축하드립니다.</p>" +
                 "<p>아래링크를 클릭하셔서 가입을 완료하세요</p>" +
-                "<div><a href='http://localhost:8080/member/email-auth?id=" + uuid + "'> 가입 완료 </a></div>";
+                "<div><a target='_blank' href='http://localhost:8080/member/email-auth?id=" + uuid + "'> 가입 완료 </a></div>";
         mailComponents.sendMail(email, subject, text);
         return true;
     }

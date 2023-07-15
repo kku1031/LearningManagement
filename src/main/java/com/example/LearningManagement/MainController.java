@@ -19,11 +19,11 @@ public class MainController {
     @RequestMapping("/")
     public String index() {
 
-        String email = "kku1031@naver.com";
-        String subject = " 메일 발송 ";
-        String text = "<p> 메일 발송 성공 </p><p> !! </p>";
-
-        mailComponents.sendMail(email, subject, text);
+//        String email = "kku1031@naver.com";
+//        String subject = " 메일 발송 ";
+//        String text = "<p> 메일 발송 성공 </p><p> !! </p>";
+//
+//        mailComponents.sendMail(email, subject, text);
 
         return "index";
     }
