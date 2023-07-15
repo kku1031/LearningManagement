@@ -1,5 +1,6 @@
-package com.example.LearningManagement;
+package com.example.LearningManagement.configuration;
 
+import com.example.LearningManagement.LearningManagementApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 

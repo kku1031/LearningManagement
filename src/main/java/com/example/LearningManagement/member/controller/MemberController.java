@@ -6,9 +6,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
@@ -48,7 +51,20 @@ public class MemberController {
         boolean result = memberService.emailAuth(uuid);
         model.addAttribute("result", result);
 
-        return "member/email-auth";
+        return "member/email_auth";
 
     }
+
+    @GetMapping("/member/info")
+    public String memberInfo(Model model, Principal principal) {
+
+        return "member/info";
+    }
+
+    //로그인 : get이든 post든 다 받을 수 있게 처리
+    @RequestMapping("/member/login")
+    public String login() {
+        return "member/login";
+    }
+
 }

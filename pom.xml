@@ -55,6 +55,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
+		<!-- user, 51141106-e21d-46ac-aa63-494f90f274c3로 진행해야 페이지 접근가능	-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

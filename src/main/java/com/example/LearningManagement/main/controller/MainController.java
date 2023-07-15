@@ -1,4 +1,4 @@
-package com.example.LearningManagement;
+package com.example.LearningManagement.main.controller;
 
 import com.example.LearningManagement.components.MailComponents;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ public class MainController {
 
     //요청에 대한 매핑.
     @RequestMapping("/")
-    public String index() {
+    public String main() {
 
 //        String email = "kku1031@naver.com";
 //        String subject = " 메일 발송 ";
@@ -25,7 +25,7 @@ public class MainController {
 //
 //        mailComponents.sendMail(email, subject, text);
 
-        return "index";
+        return "main";
     }
 
 

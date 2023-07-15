@@ -6,9 +6,17 @@ import com.example.LearningManagement.member.model.MemberInput;
 import com.example.LearningManagement.member.repository.MemberRepository;
 import com.example.LearningManagement.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -30,13 +38,18 @@ public class MemberServiceImpl implements MemberService {
             return false;
         }
 
+        //DB에 설정된 비밀번호 : 1234 !=  화면 UI **** => 인코딩 맞춰야함. ->  설정 이후 DB도 암호화해서 저장됨.
+        //password 해쉬 저장해야함
+        String encPassword = BCrypt.hashpw(parameter.getPassword(), BCrypt.gensalt());
+        //UUID : 고유한 아이디(메일인증)
         String uuid = UUID.randomUUID().toString();
 
         Member member = Member.builder()
                 .userId(parameter.getUserId())
                 .userName(parameter.getUserName())
                 .phone(parameter.getPhone())
-                .password(parameter.getPassword())
+                //.password(parameter.getPassword())를 이렇게 수정
+                .password(encPassword)
                 .regDt(LocalDateTime.now())
                 .emailAuthYn(false)
                 //회원가입 시 아무도 알수 없는 키값 생성.
@@ -70,5 +83,32 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(member);
 
         return true;
+    }
+
+    /**
+     * 스프링 시큐리티의 loadUserByUsername 메소드를 재정의.
+     * 주어진 사용자 이름에 해당하는 회원 정보를 찾아서 UserDetails 타입으로 반환.
+     *
+     * @param username 사용자 이름 (이메일).
+     * @return UserDetails 타입의 객체로 변환된 회원 정보.
+     * @throws UsernameNotFoundException 주어진 사용자 이름에 해당하는 회원 정보가 없을 경우 예외.
+     */
+
+    //회원정보 return
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        //username = id(email)
+        Optional<Member> optionalMember = memberRepository.findById(username);
+        if (!optionalMember.isPresent()) {
+            throw new UsernameNotFoundException("회원 정보가 존재하지 않습니다.");
+        }
+
+        Member member = optionalMember.get();
+
+        List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+        grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER`"));
+
+        return new User(member.getUserId(), member.getPassword(), grantedAuthorities);
     }
 }

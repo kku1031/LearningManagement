@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>회원 로그인</title>
+</head>
+<body>
+        <h1>회원 로그인</h1>
+
+        <div th:text="${errorMessage}">
+        </div>
+
+        <form method="post">
+
+            <div>                   <!-- 스프링시큐리티에서 userId가 아니라 username 소문자로 던져야됨.-->
+                <input type="text" name="username" placeholder="아이디(이메일)을 입력해주세요" required/>
+            </div>
+            <div>
+                <input type="password" name="password" placeholder="비밀번호를 입력해주세요" required/>
+            </div>
+            <div>
+                <button type="submit"> 로그인 </button>
+            </div>
+        </form>
+</body>
+</html>
