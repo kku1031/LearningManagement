@@ -34,4 +34,21 @@ public class MemberController {
 
         return "member/register_complete";
     }
+
+    // http://www.naver.com/news/list.do?id=123&key=124&text=쿼리
+    // https://
+    // 프로토콜://도메인(IP) : ip와 주소 매핑/news/list.do?쿼리스트링(파라미터)
+    //            ->www.naver.com:80(웹에서 포트번호 생략)으로 사용해서 드갈수 있게.
+
+    @GetMapping("/member/email-auth")
+    public String emailAuth(Model model, HttpServletRequest request) {
+
+        String uuid = request.getParameter("id");
+
+        boolean result = memberService.emailAuth(uuid);
+        model.addAttribute("result", result);
+
+        return "member/email-auth";
+
+    }
 }
