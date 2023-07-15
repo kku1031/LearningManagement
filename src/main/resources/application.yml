@@ -8,10 +8,22 @@ spring:
     driver-class-name: org.mariadb.jdbc.Driver
     username: minicampus_user
     password: a1234
-#테이블 자동생성 : true
+  #테이블 자동생성 : true
   jpa:
     generate-ddl: true
     hibernate:
       ddl-auto: update
     show-sql: true
+
+  #서버 설정 : 구글메일 보통 포트 : 587, 인텔리제이에서 smtp이하 부분 빨간색으로 나오지만 정상작동함.
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: rkdrudrn1031@gmail.com
+    password: wplkdkdvjwgbppps
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
 
