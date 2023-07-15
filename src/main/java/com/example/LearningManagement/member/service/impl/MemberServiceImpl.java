@@ -2,6 +2,7 @@ package com.example.LearningManagement.member.service.impl;
 
 import com.example.LearningManagement.components.MailComponents;
 import com.example.LearningManagement.member.entity.Member;
+import com.example.LearningManagement.member.exception.MemberNotEmailAuthException;
 import com.example.LearningManagement.member.model.MemberInput;
 import com.example.LearningManagement.member.repository.MemberRepository;
 import com.example.LearningManagement.member.service.MemberService;
@@ -100,11 +101,17 @@ public class MemberServiceImpl implements MemberService {
 
         //username = id(email)
         Optional<Member> optionalMember = memberRepository.findById(username);
+
         if (!optionalMember.isPresent()) {
             throw new UsernameNotFoundException("회원 정보가 존재하지 않습니다.");
         }
 
         Member member = optionalMember.get();
+
+        //아이디 비밀번호 로그인 이후, 메일 인증이 되지 않았을 때, 처리.
+        if (!member.isEmailAuthYn()) {
+            throw new MemberNotEmailAuthException("이메일을 활성화 이후에 로그인을 해주세요.");
+        }
 
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER`"));

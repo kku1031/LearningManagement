@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @RequiredArgsConstructor
 @EnableWebSecurity //Security 활성화
@@ -44,10 +45,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 )
                 //모든 접근 허가
                 .permitAll();
+        //로그인
         http.formLogin()
                 .loginPage("/member/login")
                 .failureHandler(getFailureHandler())
                 .permitAll();
+        //로그아웃
+        http.logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
+                .logoutSuccessUrl("/")
+                //세션 초기화
+                .invalidateHttpSession(true);
 
         super.configure(http);
     }
