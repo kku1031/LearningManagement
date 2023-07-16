@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>회원 가입</title>
 </head>
 <body>
     <h1>회원 가입</h1>
+    <div th:replace="/fragments/layout.html :: fragment-body-menu"></div>
     <!-- 직접 입력하는 태그 : form 태그 (다양한 태그 : 서버로 데이터를 보내는 목적)-->
     <!-- input 태그 : 사용자가 정보를 입력하는 부분을 만들어야 할 때 사용 -->
     <!-- "text"(default 값이어서 생략가능)로 주면 되는데 email은 email형태가 따로 있음-->
