@@ -32,4 +32,10 @@ public class Member {
     //회원가입시 키 생성 -> 만들어진 키 email로 전송 -> email로 접속 성공 시(emailAuthYn = true)
     private String emailAuthKey;
 
+    //비밀번호 초기화 키 생성
+    private String resetPasswordKey;
+
+    //특정기간 지나면 초기화 안됨
+    private LocalDateTime resetPasswordLimitDt;
+
 }

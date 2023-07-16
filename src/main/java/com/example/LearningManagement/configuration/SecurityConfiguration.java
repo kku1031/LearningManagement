@@ -42,6 +42,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/"
                         , "/member/register"    //회원가입 페이지
                         , "/member/email-auth"  //회원정보 페이지
+                        , "/member/find/password" //비밀번호 찾기 페이지
+                        , "/member/reset/password" //비밀번호 초기화 페이지
                 )
                 //모든 접근 허가
                 .permitAll();
