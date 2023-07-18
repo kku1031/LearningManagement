@@ -1,5 +1,7 @@
 package com.example.LearningManagement.member.service.impl;
 
+import com.example.LearningManagement.admin.dto.MemberDto;
+import com.example.LearningManagement.admin.mapper.MemberMapper;
 import com.example.LearningManagement.components.MailComponents;
 import com.example.LearningManagement.member.entity.Member;
 import com.example.LearningManagement.member.exception.MemberNotEmailAuthException;
@@ -29,6 +31,7 @@ public class MemberServiceImpl implements MemberService {
     private final MemberRepository memberRepository;
     private final MailComponents mailComponents;
 
+    private final MemberMapper memberMapper;
 
     //회원가입
     @Override
@@ -196,7 +199,7 @@ public class MemberServiceImpl implements MemberService {
         //uuid
         Optional<Member> optionalMember = memberRepository.findByResetPasswordKey(uuid);
         if (!optionalMember.isPresent()) {
-           return false;
+            return false;
         }
 
         Member member = optionalMember.get();
@@ -212,10 +215,16 @@ public class MemberServiceImpl implements MemberService {
         return true;
     }
 
+    //회원 목록
     @Override
-    public List<Member> list() {
+    public List<MemberDto> list() {
 
-        return memberRepository.findAll();
+        MemberDto parameter = new MemberDto();
+
+        List<MemberDto> list = memberMapper.selectList(parameter);
+
+        return list;
+//        return memberRepository.findAll();
 
     }
 }

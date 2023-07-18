@@ -33,4 +33,12 @@ logging:
   level:
     root: info
 
+mybatis:
+  #xml 위치
+  mapper-locations: mybatis/**/*.xml
+  configuration:
+    #DB 소문자 스네이크 표기된 부분 자동으로 카멜로 바꾸어줌.
+    map-underscore-to-camel-case: true
+    #standartout 화면에 바로 log로 표시.
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 
