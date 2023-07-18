@@ -38,4 +38,10 @@ public class Member {
     //특정기간 지나면 초기화 안됨
     private LocalDateTime resetPasswordLimitDt;
 
+    // 예 : 회원에 따른 ROLE 지정.
+    //준회원/정회원/특별회원/관리자
+    //ROLE_SEMI_USER, ROLE_USER, ROLE_SPECIAL_USER, ROLE_ADMIN
+
+    //관리자 여부 체크
+    private boolean adminYn;
 }

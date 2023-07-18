@@ -80,6 +80,12 @@ public class MemberServiceImpl implements MemberService {
         }
 
         Member member = optionalMember.get();
+
+        //이미 활성화가 되었기 때문에 활성화가 의미가 없으니까 실패하게!
+        if (member.isEmailAuthYn()) {
+            return false;
+        }
+
         member.setEmailAuthYn(true);
         member.setEmailAuthDt(LocalDateTime.now());
         memberRepository.save(member);
@@ -116,6 +122,10 @@ public class MemberServiceImpl implements MemberService {
 
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
         grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_USER`"));
+
+        if (member.isAdminYn()) {
+            grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+        }
 
         return new User(member.getUserId(), member.getPassword(), grantedAuthorities);
     }

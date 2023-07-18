@@ -44,9 +44,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         , "/member/email-auth"  //회원정보 페이지
                         , "/member/find/password" //비밀번호 찾기 페이지
                         , "/member/reset/password" //비밀번호 초기화 페이지
+
+
                 )
                 //모든 접근 허가
                 .permitAll();
+        
+        //관리자 설정
+        http.authorizeRequests()
+                .antMatchers("/admin/**")
+                .hasAuthority("ROLE_ADMIN");
+
+        //권한없을 때 예외 처리
+        http.exceptionHandling()
+                .accessDeniedPage("/error/denied");
+
         //로그인
         http.formLogin()
                 .loginPage("/member/login")
