@@ -23,4 +23,9 @@ public class MemberDto {
     
     boolean adminYn;
 
+    //추가 컬럼
+    long totalCount;
+    long seq;
+
+
 }

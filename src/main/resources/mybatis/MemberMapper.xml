@@ -4,6 +4,38 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.LearningManagement.admin.mapper.MemberMapper">
 
+    <!-- 회원 전체개수 -->
+    <select id="selectListCount"
+            parameterType="com.example.LearningManagement.admin.model.MemberParam"
+            resultType="long">
+        select count(*) from member where 1=1
+        <if test="searchType != null and searchValue != null">
+            <choose>
+                <when test="searchType == 'userId'">
+                    <!-- 문자열 검색 like,  % 기호가 문자열 앞뒤로 추가 : 모든 레코드 검색 -->
+                    and user_id like concat('%', #{searchValue}, '%')
+                </when>
+                <when test="searchType == 'userName'">
+                    and user_name like concat('%', #{searchValue}, '%')
+                </when>
+                <when test="searchType == 'phone'">
+                    and phone like concat('%', #{searchValue}, '%')
+                </when>
+                <!-- 그외의 경우 전체 -->
+                <otherwise>
+                    and
+                    (
+                    user_id like concat('%', #{searchValue}, '%')
+                    or
+                    user_name like concat('%', #{searchValue}, '%')
+                    or
+                    phone like concat('%', #{searchValue}, '%')
+                    )
+                </otherwise>
+            </choose>
+        </if>
+    </select>
+    <!-- 회원 목록 -->
     <select id="selectList"
             parameterType="com.example.LearningManagement.admin.model.MemberParam"
             resultType="com.example.LearningManagement.admin.dto.MemberDto">
@@ -33,7 +65,6 @@
                     </otherwise>
                 </choose>
             </if>
-        limit 0, 10
+        limit #{pageStart}, #{pageEnd}
     </select>
-
 </mapper>
