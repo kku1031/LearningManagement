@@ -2,6 +2,7 @@ package com.example.LearningManagement.member.service.impl;
 
 import com.example.LearningManagement.admin.dto.MemberDto;
 import com.example.LearningManagement.admin.mapper.MemberMapper;
+import com.example.LearningManagement.admin.model.MemberParam;
 import com.example.LearningManagement.components.MailComponents;
 import com.example.LearningManagement.member.entity.Member;
 import com.example.LearningManagement.member.exception.MemberNotEmailAuthException;
@@ -217,9 +218,7 @@ public class MemberServiceImpl implements MemberService {
 
     //회원 목록
     @Override
-    public List<MemberDto> list() {
-
-        MemberDto parameter = new MemberDto();
+    public List<MemberDto> list(MemberParam parameter) {
 
         List<MemberDto> list = memberMapper.selectList(parameter);
 

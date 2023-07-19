@@ -1,6 +1,7 @@
 package com.example.LearningManagement.admin.controller;
 
 import com.example.LearningManagement.admin.dto.MemberDto;
+import com.example.LearningManagement.admin.model.MemberParam;
 import com.example.LearningManagement.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -16,9 +17,9 @@ public class AdminMemberController {
     private final MemberService memberService;
 
     @GetMapping("/admin/member/list.do")
-    public String list(Model model) {
+    public String list(Model model, MemberParam parameter) {
 
-        List<MemberDto> members = memberService.list();
+        List<MemberDto> members = memberService.list(parameter);
 
         model.addAttribute("list", members);
 

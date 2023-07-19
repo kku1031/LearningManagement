@@ -1,6 +1,7 @@
 package com.example.LearningManagement.member.service;
 
 import com.example.LearningManagement.admin.dto.MemberDto;
+import com.example.LearningManagement.admin.model.MemberParam;
 import com.example.LearningManagement.member.model.MemberInput;
 import com.example.LearningManagement.member.model.ResetPasswordInput;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -26,5 +27,5 @@ public interface MemberService extends UserDetailsService {
     boolean checkResetPassword(String uuid);
 
     //회원 목록 리턴 가져오기(관리자에서만 사용 가능)
-    List<MemberDto> list();
+    List<MemberDto> list(MemberParam parameter);
 }
