@@ -2,7 +2,7 @@ package com.example.LearningManagement.admin.controller;
 
 import com.example.LearningManagement.admin.dto.MemberDto;
 import com.example.LearningManagement.admin.model.MemberParam;
-import com.example.LearningManagement.admin.model.MemberStatusInput;
+import com.example.LearningManagement.admin.model.MemberInput;
 import com.example.LearningManagement.admin.util.PageUtil;
 import com.example.LearningManagement.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -54,9 +54,17 @@ public class AdminMemberController {
     }
 
     @PostMapping("/admin/member/status.do")
-    public String status(Model model, MemberStatusInput parameter) {
+    public String status(Model model, MemberInput parameter) {
 
         boolean result = memberService.updateStatus(parameter.getUserId(), parameter.getUserStatus());
+
+        return "redirect:/admin/member/detail.do?userId=" + parameter.getUserId();
+    }
+
+    @PostMapping("/admin/member/password.do")
+    public String password(Model model, MemberInput parameter) {
+
+        boolean result = memberService.updatePassword(parameter.getUserId(), parameter.getPassword());
 
         return "redirect:/admin/member/detail.do?userId=" + parameter.getUserId();
     }

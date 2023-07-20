@@ -26,12 +26,15 @@ public interface MemberService extends UserDetailsService {
     //입력받은 uuid값이 유효한지 확인.
     boolean checkResetPassword(String uuid);
 
-    //회원 목록 리턴 가져오기(관리자에서만 사용 가능)
+    //회원 목록 리턴 가져오기(관리자)
     List<MemberDto> list(MemberParam parameter);
 
     //회원 상세 정보
     MemberDto detail(String userId);
 
-    //회원 상태 변경
+    //회원 상태 변경(관리자)
     boolean updateStatus(String userId, String userStatus);
+
+    //회원 비밀 번호 초기화(관리자)
+    boolean updatePassword(String userId, String password);
 }

@@ -281,4 +281,23 @@ public class MemberServiceImpl implements MemberService {
 
         return true;
     }
+
+    //회원 비밀번호 초기화
+    @Override
+    public boolean updatePassword(String userId, String password) {
+        Optional<Member> optionalMember = memberRepository.findById(userId);
+
+        if (!optionalMember.isPresent()) {
+            throw new UsernameNotFoundException("회원 정보가 존재하지 않습니다.");
+        }
+
+        Member member = optionalMember.get();
+
+        String encPassword = BCrypt.hashpw(password, BCrypt.gensalt());
+
+        member.setPassword(encPassword);
+        memberRepository.save(member);
+
+        return true;
+    }
 }
