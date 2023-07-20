@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Member {
+public class Member implements MemberCode {
 
     @Id
     private String userId;
@@ -44,4 +44,8 @@ public class Member {
 
     //관리자 여부 체크
     private boolean adminYn;
+
+    //유저 상태 변경(이용가능 상태, 정지 상태)
+    private String userStatus;
+
 }

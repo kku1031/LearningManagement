@@ -6,6 +6,7 @@ import com.example.LearningManagement.admin.model.MemberParam;
 import com.example.LearningManagement.components.MailComponents;
 import com.example.LearningManagement.member.entity.Member;
 import com.example.LearningManagement.member.exception.MemberNotEmailAuthException;
+import com.example.LearningManagement.member.exception.MemberStopUserException;
 import com.example.LearningManagement.member.model.MemberInput;
 import com.example.LearningManagement.member.model.ResetPasswordInput;
 import com.example.LearningManagement.member.repository.MemberRepository;
@@ -61,6 +62,7 @@ public class MemberServiceImpl implements MemberService {
                 .emailAuthYn(false)
                 //회원가입 시 아무도 알수 없는 키값 생성.
                 .emailAuthKey(uuid)
+                .userStatus(Member.MEMBER_STATUS_REQ)
                 .build();
 
         memberRepository.save(member);
@@ -91,6 +93,7 @@ public class MemberServiceImpl implements MemberService {
             return false;
         }
 
+        member.setUserStatus(Member.MEMBER_STATUS_ING);
         member.setEmailAuthYn(true);
         member.setEmailAuthDt(LocalDateTime.now());
         memberRepository.save(member);
@@ -121,8 +124,13 @@ public class MemberServiceImpl implements MemberService {
         Member member = optionalMember.get();
 
         //아이디 비밀번호 로그인 이후, 메일 인증이 되지 않았을 때, 처리.
-        if (!member.isEmailAuthYn()) {
+        if (Member.MEMBER_STATUS_REQ.equals(member.getUserStatus())) {
             throw new MemberNotEmailAuthException("이메일을 활성화 이후에 로그인을 해주세요.");
+        }
+
+        //정지된 회원
+        if (Member.MEMBER_STATUS_STOP.equals(member.getUserStatus())) {
+            throw new MemberStopUserException("정지된 회원 입니다.");
         }
 
         List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
@@ -253,5 +261,24 @@ public class MemberServiceImpl implements MemberService {
         Member member = optionalMember.get();
 
         return MemberDto.of(member);
+    }
+
+
+    //회원 상태 변경
+    @Override
+    public boolean updateStatus(String userId, String userStatus) {
+
+        Optional<Member> optionalMember = memberRepository.findById(userId);
+
+        if (!optionalMember.isPresent()) {
+            throw new UsernameNotFoundException("회원 정보가 존재하지 않습니다.");
+        }
+
+        Member member = optionalMember.get();
+
+        member.setUserStatus(userStatus);
+        memberRepository.save(member);
+
+        return true;
     }
 }

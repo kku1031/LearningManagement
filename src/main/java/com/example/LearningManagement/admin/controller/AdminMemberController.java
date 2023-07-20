@@ -2,12 +2,14 @@ package com.example.LearningManagement.admin.controller;
 
 import com.example.LearningManagement.admin.dto.MemberDto;
 import com.example.LearningManagement.admin.model.MemberParam;
+import com.example.LearningManagement.admin.model.MemberStatusInput;
 import com.example.LearningManagement.admin.util.PageUtil;
 import com.example.LearningManagement.member.service.MemberService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.List;
 
@@ -49,5 +51,13 @@ public class AdminMemberController {
         model.addAttribute("member", member);
 
         return "admin/member/detail";
+    }
+
+    @PostMapping("/admin/member/status.do")
+    public String status(Model model, MemberStatusInput parameter) {
+
+        boolean result = memberService.updateStatus(parameter.getUserId(), parameter.getUserStatus());
+
+        return "redirect:/admin/member/detail.do?userId=" + parameter.getUserId();
     }
 }
