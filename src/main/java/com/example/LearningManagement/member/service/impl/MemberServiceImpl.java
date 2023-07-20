@@ -238,4 +238,20 @@ public class MemberServiceImpl implements MemberService {
 //        return memberRepository.findAll();
 
     }
+
+    // 회원 상세 정보
+    // 회원 목록 : ORM mapper(MyBatis) - 페이징, 검색 등 쿼리 부분이 복잡한 부분처리 용이(다른 데이터와 연관이 있을 때)
+    // 회원 상세 정보 : JPA - 쿼리가 심플한 CRUD(하나의 데이터 select 할때)
+    @Override
+    public MemberDto detail(String userId) {
+
+        Optional<Member> optionalMember = memberRepository.findById(userId);
+        if (!optionalMember.isPresent()) {
+            return null;
+        }
+
+        Member member = optionalMember.get();
+
+        return MemberDto.of(member);
+    }
 }
