@@ -1,6 +1,7 @@
 package com.example.LearningManagement.admin.service;
 
 import com.example.LearningManagement.admin.dto.CategoryDto;
+import com.example.LearningManagement.admin.model.CategoryInput;
 
 import java.util.List;
 
@@ -14,7 +15,7 @@ public interface CategoryService {
     boolean add(String categoryName);
 
     //카테고리 수정
-    boolean update(CategoryDto parameter);
+    boolean update(CategoryInput parameter);
 
     //카테고리 삭제
     boolean del(long id);

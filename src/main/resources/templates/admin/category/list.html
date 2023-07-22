@@ -22,41 +22,43 @@
         }
     </style>
 
-<!--    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>-->
-<!--    <script>-->
-<!--        $(document).ready(function() {-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
 
-<!--            $('form[name=deleteForm]').on('submit', function() {-->
-<!--                if (!confirm(' 카테고리를 삭제하시겠습니까? ')) {-->
-<!--                    return false;-->
-<!--                }-->
-<!--            });-->
+            $('form[name=deleteForm]').on('submit', function() {
+                if (!confirm(' 카테고리를 삭제하시겠습니까? ')) {
+                    <!--  서버 전송되지 않음.-->
+                    return false;
+                }
+            });
 
+            <!--  수정 버튼 클릭 시 -->
+            $('button.update-button').on('click', function() {
 
-<!--            $('button.update-button').on('click', function() {-->
+                if (!confirm('카테고리를 수정하시겠습니까?')) {
+                    return false;
+                }
+            <!--  this 버튼 -->
+                var $this = $(this);
+                <!--  closest 상위로 올라가서 버튼 찾는것. -->
+                var $tr = $this.closest('tr');
+                <!--  tr에서 각각의 값 찾기 -->
+                var id = $tr.find('input[name=id]').val();
+                var categoryName = $tr.find('input[name=categoryName]').val();
+                var sortValue = $tr.find('input[name=sortValue]').val();
+                var usingYn = $tr.find('input[type=checkbox]')[0].checked;
 
-<!--                if (!confirm('카테고리를 수정하시겠습니까?')) {-->
-<!--                    return false;-->
-<!--                }-->
+                $updateForm = $('form[name=updateForm]');
+                $updateForm.find('input[name=id]').val( id );
+                $updateForm.find('input[name=categoryName]').val( categoryName );
+                $updateForm.find('input[name=sortValue]').val( sortValue );
+                $updateForm.find('input[name=usingYn]').val( usingYn );
+                $updateForm.submit();
+            });
 
-<!--                var $this = $(this);-->
-<!--                var $tr = $this.closest('tr');-->
-
-<!--                var id = $tr.find('input[name=id]').val();-->
-<!--                var categoryName = $tr.find('input[name=categoryName]').val();-->
-<!--                var sortValue = $tr.find('input[name=sortValue]').val();-->
-<!--                var usingYn = $tr.find('input[type=checkbox]')[0].checked;-->
-
-<!--                $updateForm = $('form[name=updateForm]');-->
-<!--                $updateForm.find('input[name=id]').val( id );-->
-<!--                $updateForm.find('input[name=categoryName]').val( categoryName );-->
-<!--                $updateForm.find('input[name=sortValue]').val( sortValue );-->
-<!--                $updateForm.find('input[name=usingYn]').val( usingYn );-->
-<!--                $updateForm.submit();-->
-<!--            });-->
-
-<!--        });-->
-<!--    </script>-->
+        });
+    </script>
 </head>
 <div class="list">
     <h1>카테고리 관리</h1>
@@ -115,6 +117,7 @@
                 </div>
             </td>
         </tr>
+
         <tr th:if="${#lists.size(list) < 1}">
             <td colspan="5" >
                 <p class="nothing">내용이 없습니다.</p>
@@ -126,12 +129,12 @@
 </div>
 
 
-<!--<form name="updateForm" method="post" action="/admin/category/update.do">-->
-<!--    <input type="hidden" name="id"/>-->
-<!--    <input type="hidden" name="categoryName"/>-->
-<!--    <input type="hidden" name="sortValue"/>-->
-<!--    <input type="hidden" name="usingYn" />-->
-<!--</form>-->
+<form name="updateForm" method="post" action="/admin/category/update.do">
+    <input type="hidden" name="id"/>
+    <input type="hidden" name="categoryName"/>
+    <input type="hidden" name="sortValue"/>
+    <input type="hidden" name="usingYn" />
+</form>
 
 
 </body>
